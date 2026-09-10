@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import type { HostToRendererMessage, Op } from '@dom-bridge/protocol';
+import { describe, expect, it } from 'vitest';
 import { createDomHost, type DomHost, type VirtualDocument } from '../src/index.ts';
 
 interface Harness {

@@ -1,5 +1,5 @@
 import './styles.css';
-import { createBridge, type Bridge } from '@dom-bridge/bridge';
+import { type Bridge, createBridge } from '@dom-bridge/bridge';
 import { createWebWorkerChannel } from '@dom-bridge/bridge/web';
 import { examples, getExample, resolveExample } from '@dom-bridge/examples';
 import { DomRenderer } from '@dom-bridge/renderer/dom';

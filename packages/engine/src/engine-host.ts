@@ -41,10 +41,12 @@ export function createEngineHost(
     post: (message) => transport.post(message),
   };
 
-  // 仅供本地调试：把代码送进无 DOM 的引擎线程执行（间接 eval，不触发 no-eval）
+  // 仅供本地调试：把代码送进无 DOM 的引擎线程执行
   const runEval = (code: string): void => {
     try {
-      const value = (0, eval)(code);
+      // biome-ignore lint/security/noGlobalEval: 引擎线程的本地调试钩子，只由调试台使用
+      const indirectEval = globalThis.eval;
+      const value = indirectEval(code);
       transport.post({ kind: 'eval-result', ok: true, value: String(value) });
     } catch (error) {
       const detail = error instanceof Error ? (error.stack ?? error.message) : String(error);

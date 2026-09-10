@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
 import type { HostToRendererMessage, Op } from '@dom-bridge/protocol';
+import { describe, expect, it, vi } from 'vitest';
 import {
   AT_TARGET,
   BUBBLING_PHASE,

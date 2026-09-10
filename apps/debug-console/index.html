@@ -35,9 +35,9 @@
         </div>
 
         <div class="toolbar">
-          <button id="btn-click">模拟点击按钮</button>
-          <button id="btn-auto">自动连点 ×5</button>
-          <button id="btn-clear">清空日志</button>
+          <button type="button" id="btn-click">模拟点击按钮</button>
+          <button type="button" id="btn-auto">自动连点 ×5</button>
+          <button type="button" id="btn-clear">清空日志</button>
           <label><input type="checkbox" id="chk-flash" checked /> 高亮变更</label>
         </div>
 
@@ -47,7 +47,7 @@ const p = document.createElement('p');
 p.textContent = '这行字是在引擎线程里创建的，经 op 流渲染到真实 DOM';
 document.body.appendChild(p);
 '已插入';</textarea>
-          <button id="btn-eval">在引擎线程执行</button>
+          <button type="button" id="btn-eval">在引擎线程执行</button>
         </div>
 
         <ol id="log" class="log"></ol>

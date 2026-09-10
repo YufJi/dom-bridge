@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import type { VirtualNode } from '@dom-bridge/engine';
+import type { ReactNode } from 'react';
 
 /**
  * 我们实现的 host config 形状，按 react-reconciler@0.29 实际调用点整理：

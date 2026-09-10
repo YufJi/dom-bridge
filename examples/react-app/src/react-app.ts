@@ -1,7 +1,8 @@
 /// <reference path="./react-reconciler.d.ts" />
-import React from 'react';
-import type { ReactNode } from 'react';
+
 import type { VirtualDocument } from '@dom-bridge/engine';
+import type { ReactNode } from 'react';
+import React from 'react';
 import createReconciler from 'react-reconciler';
 import { ConcurrentRoot } from 'react-reconciler/constants.js';
 import { createHostConfig } from './host-config.ts';

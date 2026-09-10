@@ -29,7 +29,7 @@ pnpm test           # Vitest across workspaces
 TypeScript strict, ESM only; relative imports carry the `.ts` extension and type-only imports use `import type`.
 
 - Erasable syntax only (`erasableSyntaxOnly`): no enums, namespaces, parameter properties or JSX — Node strips types at runtime.
-- Prettier: single quotes, 100 columns, trailing commas; ESLint must stay clean.
+- Biome formats and lints (2-space indent, single quotes, 100 columns, import sorting); Prettier only covers Markdown, which Biome cannot format yet.
 - Files `kebab-case.ts`; functions and variables `camelCase`; classes and types `PascalCase`; packages `@dom-bridge/*`.
 - New op kinds extend the `Op` union in `protocol` and must be handled in `describeOp`.
 
@@ -39,7 +39,7 @@ Vitest; name cases as behaviour sentences in Chinese, and opt DOM tests in with 
 
 ## CI & Deployment
 
-`ci.yml` runs `format:check`, `lint`, `typecheck`, `test`, `build` and a browserless `pnpm demo` smoke. `deploy-pages.yml` publishes the debug console to GitHub Pages, taking the base path from `configure-pages`; reproduce locally with `PAGES_BASE=/dom-bridge/ pnpm --filter @dom-bridge/debug-console build`.
+`ci.yml` runs `format:check` (Biome `ci` plus a Prettier pass over Markdown), `typecheck`, `test`, `build` and a browserless `pnpm demo` smoke. `deploy-pages.yml` publishes the debug console to GitHub Pages, taking the base path from `configure-pages`; reproduce locally with `PAGES_BASE=/dom-bridge/ pnpm --filter @dom-bridge/debug-console build`.
 
 Keep the engine worker inline in the host — `new Worker(new URL('./engine-worker.ts', import.meta.url), { type: 'module' })`, handed to `createWebWorkerChannel` — or the bundle emits no worker chunk and Pages serves a blank page.
 

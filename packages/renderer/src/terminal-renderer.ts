@@ -1,10 +1,10 @@
 import {
-  ROOT_ID,
-  isOpBatch,
   type HostToRendererMessage,
+  isOpBatch,
   type NodeId,
   type Op,
   type RendererTransport,
+  ROOT_ID,
 } from '@dom-bridge/protocol';
 import type { RendererStats } from './types.ts';
 

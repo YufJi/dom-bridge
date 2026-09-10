@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { createDomHost } from '@dom-bridge/engine';
+import { describe, expect, it } from 'vitest';
 import {
   examples,
   getExample,

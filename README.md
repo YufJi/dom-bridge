@@ -178,8 +178,8 @@ pnpm demo -- react   # 指定示例（React 18）
 ```bash
 pnpm test               # Vitest：9 个文件 63 个用例（协议 / 代理层 / 事件 / 桥接 / 两个渲染实现 / 示例注册表）
 pnpm typecheck          # pnpm -r，逐个包跑 tsc --noEmit
-pnpm lint               # ESLint flat config + typescript-eslint
-pnpm format             # Prettier
+pnpm lint               # Biome（Rust）：静态检查 + 可自动修复的规则
+pnpm format             # Biome 格式化 + import 排序（Markdown 仍由 Prettier 负责）
 pnpm build              # 递归构建（当前只有 debug-console 需要产物）
 pnpm --filter @dom-bridge/engine typecheck   # 也可以只跑单个包
 ```

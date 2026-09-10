@@ -1,6 +1,6 @@
 import {
-  isOpBatch,
   type HostToRendererMessage,
+  isOpBatch,
   type Op,
   type RendererTransport,
 } from '@dom-bridge/protocol';

@@ -60,10 +60,16 @@ export interface HostErrorMessage {
 }
 
 export type HostToRendererMessage =
-  OpBatchMessage | EvalResultMessage | ReadyMessage | HostErrorMessage;
+  | OpBatchMessage
+  | EvalResultMessage
+  | ReadyMessage
+  | HostErrorMessage;
 
 export type RendererToHostMessage =
-  RemoteEventMessage | EvalRequestMessage | ShutdownMessage | StartMessage;
+  | RemoteEventMessage
+  | EvalRequestMessage
+  | ShutdownMessage
+  | StartMessage;
 
 /** 引擎线程发送消息的通道。 */
 export type HostTransport = (message: HostToRendererMessage) => void;

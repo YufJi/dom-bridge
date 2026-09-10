@@ -26,11 +26,8 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Format check
+      - name: Format and lint (Biome, Prettier for Markdown)
         run: pnpm format:check
-
-      - name: Lint
-        run: pnpm lint
 
       - name: Typecheck
         run: pnpm typecheck

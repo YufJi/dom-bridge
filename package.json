@@ -16,18 +16,16 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "pnpm -r typecheck",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "lint": "biome lint .",
+    "format": "biome check --write . && prettier --write \"**/*.md\"",
+    "format:check": "biome ci . && prettier --check \"**/*.md\""
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@biomejs/biome": "^2.5.12",
     "@types/node": "^22.20.2",
-    "eslint": "^10.10.0",
     "happy-dom": "^20.14.3",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.0",
     "vitest": "^5.0.0"
   }
 }

@@ -16,9 +16,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font:
-    14px/1.5 -apple-system,
-    'PingFang SC',
-    'Helvetica Neue',
+    14px / 1.5 -apple-system,
+    "PingFang SC",
+    "Helvetica Neue",
     Arial,
     sans-serif;
 }
@@ -222,7 +222,7 @@ main {
 textarea {
   width: 100%;
   font:
-    12px/1.5 ui-monospace,
+    12px / 1.5 ui-monospace,
     SFMono-Regular,
     Menlo,
     monospace;
@@ -240,7 +240,7 @@ textarea {
   max-height: 46vh;
   overflow: auto;
   font:
-    12px/1.6 ui-monospace,
+    12px / 1.6 ui-monospace,
     SFMono-Regular,
     Menlo,
     monospace;

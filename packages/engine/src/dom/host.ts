@@ -1,9 +1,9 @@
 import {
-  ROOT_ID,
   type HostTransport,
   type NodeId,
   type Op,
   type RemoteEventMessage,
+  ROOT_ID,
 } from '@dom-bridge/protocol';
 import { dispatchRemoteEvent } from './events.ts';
 import { DomNode } from './node.ts';

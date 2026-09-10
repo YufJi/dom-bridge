@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
 import type { HostToRendererMessage, RendererToHostMessage } from '@dom-bridge/protocol';
-import { createBridge, type BridgeEvent, type BridgeRenderer } from '../src/index.ts';
+import { describe, expect, it, vi } from 'vitest';
 import type { EngineChannel } from '../src/channel.ts';
+import { type BridgeEvent, type BridgeRenderer, createBridge } from '../src/index.ts';
 
 interface FakeChannel {
   channel: EngineChannel;

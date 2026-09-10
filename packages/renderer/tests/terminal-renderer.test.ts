@@ -1,5 +1,5 @@
+import { type Op, ROOT_ID } from '@dom-bridge/protocol';
 import { describe, expect, it, vi } from 'vitest';
-import { ROOT_ID, type Op } from '@dom-bridge/protocol';
 import { TerminalRenderer } from '../src/terminal-renderer.ts';
 
 const STRUCTURE_OPS: Op[] = [

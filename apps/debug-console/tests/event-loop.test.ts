@@ -1,8 +1,9 @@
 // @vitest-environment happy-dom
-import { describe, expect, it } from 'vitest';
+
 import { createDomHost, type DomHost, type VirtualDocument } from '@dom-bridge/engine';
 import type { HostToRendererMessage } from '@dom-bridge/protocol';
 import { DomRenderer } from '@dom-bridge/renderer/dom';
+import { describe, expect, it } from 'vitest';
 
 /**
  * 引擎 ↔ 渲染器的联调：不经过 worker / 桥接层，直接把两侧接起来。

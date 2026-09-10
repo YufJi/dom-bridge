@@ -1,7 +1,8 @@
 // @vitest-environment happy-dom
-import { beforeEach, describe, expect, it } from 'vitest';
+
 import type { Op, RendererToHostMessage } from '@dom-bridge/protocol';
 import { ROOT_ID } from '@dom-bridge/protocol';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { DomRenderer } from '../src/dom-renderer.ts';
 
 interface Harness {
