@@ -8,46 +8,34 @@
 
 ## 模块划分
 
-pnpm monorepo，按“**契约 → 能力 → 装配**”三层组织，依赖方向单向收敛到 `protocol`：
+三个 workspace 根，边界是「通用能力 / 宿主 / 被托管应用」：
 
-| 包                            | 职责                                                                                                                                                      | 依赖                                             |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `@dom-bridge/protocol`        | **桥接协议**：`Op` / 消息类型 / `describeOp`，零依赖                                                                                                      | —                                                |
-| `@dom-bridge/engine`          | **引擎层**：`createDomHost`（虚拟 DOM 代理，DOM 子集与缺口见 `packages/engine/README.md`）、`createEngineHost`（协议接线 + 应用层回调）、两种 worker 引导 | protocol                                         |
-| `@dom-bridge/renderer`        | **渲染器**：契约（`.`）、真实 DOM 实现（`./dom`）、终端文本实现（`./terminal`）                                                                           | protocol                                         |
-| `@dom-bridge/bridge`          | **桥接层**：`createBridge`（消息路由 / 往返统计）、`./web` 与 `./node` 通道实现                                                                           | protocol                                         |
-| `@dom-bridge/debug-console`   | 应用：Vite 调试台（真实 DOM + DevTools + op 日志面板 + 示例切换器）                                                                                       | bridge / renderer / engine / examples / protocol |
-| `@dom-bridge/node-demo`       | 应用：Node 终端演示（worker_threads + 文本快照）                                                                                                          | bridge / renderer / engine / examples            |
-| `@dom-bridge/examples`        | **应用层**：`HostedApp` 契约 + 示例清单 + `startHostedApp` 启动逻辑                                                                                       | engine / example-counter / example-react         |
-| `@dom-bridge/example-counter` | 示例：直接调用虚拟 DOM 代理的计数器                                                                                                                       | engine                                           |
-| `@dom-bridge/example-react`   | 示例：React 18 + `react-reconciler` 自定义 renderer                                                                                                       | engine / react / react-reconciler                |
+### `packages/*` — 与业务无关的通用能力
 
-依赖方向：
+| 包                     | 目录                | 职责                                                                                           | 依赖     |
+| ---------------------- | ------------------- | ---------------------------------------------------------------------------------------------- | -------- |
+| `@dom-bridge/protocol` | `packages/protocol` | 桥接协议：`Op` / 消息类型 / `describeOp`，零依赖                                               | —        |
+| `@dom-bridge/engine`   | `packages/engine`   | 引擎层：`createDomHost`（虚拟 DOM 代理）、`createEngineHost`（协议接线，其余消息交应用层回调） | protocol |
+| `@dom-bridge/renderer` | `packages/renderer` | 渲染器：契约（`.`）、真实 DOM 实现（`./dom`）、终端文本实现（`./terminal`）                    | protocol |
+| `@dom-bridge/bridge`   | `packages/bridge`   | 桥接层：`createBridge`（消息路由 / 往返统计）、`./web` 与 `./node` 通道实现                    | protocol |
 
-```
-apps/*                     ──► bridge / renderer / examples
-examples/*                 ──► engine（示例只认识 VirtualDocument 接口）
-bridge / renderer / engine ──► protocol（零依赖契约）
-example-react              ──► react + react-reconciler（仅示例自身需要）
-```
+### `apps/*` — 宿主（建线程、装能力、决定挂载什么）
 
-分层原则：`packages/*` 只放与业务无关的原语（协议、代理、渲染、通道）；
-应用清单、应用 id、生命周期（start / ready / host-error）等语义一律留在 `apps/*` 与 `examples/*`。
+| 包                          | 目录                 | 职责                                                        | 依赖                                             |
+| --------------------------- | -------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `@dom-bridge/debug-console` | `apps/debug-console` | Vite 调试台：真实 DOM + DevTools + op 日志面板 + 示例切换器 | bridge / engine / examples / protocol / renderer |
+| `@dom-bridge/node-demo`     | `apps/node-demo`     | Node 终端演示：worker_threads + 文本快照                    | bridge / engine / examples / renderer            |
 
-```
-packages/
-  protocol/     op 与消息类型、describeOp（两端唯一共享契约）
-  engine/       dom-host（虚拟 DOM 代理）+ engine-host（协议接线）+ web/node worker 引导
-  renderer/     types（RendererLike）+ dom-renderer + terminal-renderer
-  bridge/       channel（EngineChannel）+ createBridge + web / node 通道
-apps/
-  debug-console/  index.html + src/{main,panel,engine-worker,styles.css} + vite.config.ts
-  node-demo/      src/{main,engine-worker}.ts
-examples/
-  counter-app/    示例：直接调用 DOM 代理的计数器
-  react-app/      示例：React 18 + react-reconciler 自定义 renderer
-  registry/       示例清单与按 id 解析（@dom-bridge/examples）
-```
+### `examples/*` — 被托管应用（只认识 `VirtualDocument`）
+
+| 包                            | 目录                   | 职责                                                       | 依赖                                     |
+| ----------------------------- | ---------------------- | ---------------------------------------------------------- | ---------------------------------------- |
+| `@dom-bridge/examples`        | `examples/registry`    | 应用层入口：`HostedApp` 契约 + 示例清单 + `startHostedApp` | engine / example-counter / example-react |
+| `@dom-bridge/example-counter` | `examples/counter-app` | 直接调用虚拟 DOM 代理的计数器                              | engine                                   |
+| `@dom-bridge/example-react`   | `examples/react-app`   | React 18 + `react-reconciler` 自定义 renderer              | engine / react / react-reconciler        |
+
+依赖方向只有一种：`apps/*` 与 `examples/*` → `packages/*`，`packages/*` 内部单向收敛到 `protocol`；
+示例之间互不依赖，`examples/registry` 是唯一的聚合点。
 
 各包职责的关键取舍：
 
@@ -188,7 +176,7 @@ pnpm demo -- react   # 指定示例（React 18）
 ## 工程化
 
 ```bash
-pnpm test               # Vitest：协议 / 代理层 / 桥接层 / 两个渲染实现（41 个用例）
+pnpm test               # Vitest：9 个文件 63 个用例（协议 / 代理层 / 事件 / 桥接 / 两个渲染实现 / 示例注册表）
 pnpm typecheck          # pnpm -r，逐个包跑 tsc --noEmit
 pnpm lint               # ESLint flat config + typescript-eslint
 pnpm format             # Prettier
@@ -220,11 +208,14 @@ PAGES_BASE=/dom-bridge/ pnpm --filter @dom-bridge/debug-console build
 
 ## 接下来可以探索的方向
 
-1. `innerHTML`：整体委托渲染线程解析，或引擎侧内置 HTML parser；
-2. 同步测量（`getBoundingClientRect`）的同步桥或异步测量 API；
-3. 事件补全：`input` 受控值回传、焦点管理、滚动同步、IME 合成；
-4. op 合并去重 + 按帧调度 + 渲染端增量 diff；
-5. 节点句柄回收，避免长生命周期页面的泄漏；
-6. 把 `protocol` 抽成版本化的独立制品（含协议兼容性测试），接入真实 JS 引擎（QuickJS / Hermes）与真实 WebView 渲染端。
+已补齐的能力（结构操作、`classList` / `dataset`、节点标识、事件捕获 / `once` / `passive` 等）
+以 `packages/engine/README.md` 的「已实现的 DOM 子集」为准，那里同时维护完整缺口清单与 `TODO(dom-subset)` 对照。
 
-DOM 子集的能力清单与全部缺口（含 `TODO(dom-subset)` 对照）维护在 `packages/engine/README.md`。
+1. `innerHTML` / `outerHTML`：整体委托渲染线程解析，或引擎侧内置 HTML parser；
+2. 表单 property 语义：协议补一条 property 类 op，让受控 `input`（`value` / `checked`）成立；
+3. 同步测量（`getBoundingClientRect` 等）的同步桥或异步测量 API；
+4. 焦点与输入：`focus` / `blur`、`selectionStart`、IME 合成、滚动位置同步；
+5. op 合并去重 + 按帧调度 + 渲染端增量 diff，以及节点句柄回收；
+6. 把 `protocol` 抽成版本化的独立制品（含协议兼容性测试），并接入真实 JS 引擎（QuickJS / Hermes）与真实 WebView 渲染端。
+
+引擎 ↔ 渲染器的联调测试在 `apps/debug-console/tests/event-loop.test.ts`，跑 `pnpm test` 即可覆盖。
