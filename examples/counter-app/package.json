@@ -1,0 +1,16 @@
+{
+  "name": "@dom-bridge/example-counter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "被托管的示例 Web 应用：只依赖引擎包暴露的 VirtualDocument 接口",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/engine": "workspace:*"
+  }
+}

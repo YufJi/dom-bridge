@@ -1,0 +1,18 @@
+{
+  "name": "@dom-bridge/examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "示例应用聚合入口：对外只暴露 HostedApp 清单与按 id 解析",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/engine": "workspace:*",
+    "@dom-bridge/example-counter": "workspace:*",
+    "@dom-bridge/example-react": "workspace:*"
+  }
+}

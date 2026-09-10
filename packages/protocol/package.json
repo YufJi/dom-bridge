@@ -1,0 +1,13 @@
+{
+  "name": "@dom-bridge/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "引擎线程 ↔ 渲染线程的消息与 op 契约（零依赖）",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

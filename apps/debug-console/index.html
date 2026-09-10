@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dom-bridge · Web 调试台</title>
+  </head>
+  <body>
+    <header>
+      <h1>dom-bridge <small>Web 调试台</small></h1>
+      <label class="example-picker"
+        >示例
+        <select id="example-select"></select
+      ></label>
+      <div id="status" class="status">初始化…</div>
+    </header>
+
+    <main>
+      <section class="pane">
+        <h2>渲染线程 · 真实 DOM</h2>
+        <p class="hint">
+          这里的节点由 op 流真实创建，可在 DevTools 的 <strong>Elements</strong> 面板直接检查
+          （每个节点带 <code>data-vb-id</code>）；变更时会有蓝色描边高亮。
+        </p>
+        <div id="screen" class="screen"></div>
+      </section>
+
+      <aside class="pane">
+        <h2>调试面板</h2>
+        <div class="stats">
+          <div class="stat"><b id="stat-ops">0</b><i>应用 op 数</i></div>
+          <div class="stat"><b id="stat-batches">0</b><i>批次数</i></div>
+          <div class="stat"><b id="stat-events">0</b><i>用户事件</i></div>
+          <div class="stat"><b id="stat-rtt">—</b><i>事件→回流(近似)</i></div>
+        </div>
+
+        <div class="toolbar">
+          <button id="btn-click">模拟点击按钮</button>
+          <button id="btn-auto">自动连点 ×5</button>
+          <button id="btn-clear">清空日志</button>
+          <label><input type="checkbox" id="chk-flash" checked /> 高亮变更</label>
+        </div>
+
+        <div class="toolbar">
+          <textarea id="eval-code" rows="3" spellcheck="false">
+const p = document.createElement('p');
+p.textContent = '这行字是在引擎线程里创建的，经 op 流渲染到真实 DOM';
+document.body.appendChild(p);
+'已插入';</textarea>
+          <button id="btn-eval">在引擎线程执行</button>
+        </div>
+
+        <ol id="log" class="log"></ol>
+      </aside>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

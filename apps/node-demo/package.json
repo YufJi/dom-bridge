@@ -1,0 +1,17 @@
+{
+  "name": "@dom-bridge/node-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Node 终端演示：worker_threads 引擎线程 + 终端文本渲染",
+  "scripts": {
+    "start": "node src/main.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/bridge": "workspace:*",
+    "@dom-bridge/engine": "workspace:*",
+    "@dom-bridge/examples": "workspace:*",
+    "@dom-bridge/renderer": "workspace:*"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@dom-bridge/bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "桥接层：跨线程通道封装、消息路由、往返耗时统计",
+  "exports": {
+    ".": "./src/index.ts",
+    "./web": "./src/web-worker-channel.ts",
+    "./node": "./src/node-worker-channel.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/protocol": "workspace:*"
+  }
+}

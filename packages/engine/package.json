@@ -1,0 +1,18 @@
+{
+  "name": "@dom-bridge/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "引擎侧：虚拟 DOM 代理（无 DOM 环境下运行 Web 应用）",
+  "exports": {
+    ".": "./src/index.ts",
+    "./web-worker": "./src/web-worker.ts",
+    "./node-worker": "./src/node-worker.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/protocol": "workspace:*"
+  }
+}

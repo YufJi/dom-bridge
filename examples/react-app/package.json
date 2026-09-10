@@ -1,0 +1,21 @@
+{
+  "name": "@dom-bridge/example-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "React 18 示例：用 react-reconciler 自定义 renderer，把 React 树渲染到虚拟 DOM 代理上",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@dom-bridge/engine": "workspace:*",
+    "react": "^18.3.1",
+    "react-reconciler": "^0.29.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12"
+  }
+}

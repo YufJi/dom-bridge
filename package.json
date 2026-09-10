@@ -1,0 +1,33 @@
+{
+  "name": "dom-bridge",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "description": "pnpm monorepo：把无 DOM 的 JS 引擎里的 DOM 操作代理到渲染线程（类 webview）",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @dom-bridge/debug-console dev",
+    "build": "pnpm -r build",
+    "preview": "pnpm --filter @dom-bridge/debug-console preview",
+    "demo": "pnpm --filter @dom-bridge/node-demo start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.2",
+    "eslint": "^10.10.0",
+    "happy-dom": "^20.14.3",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^5.0.0"
+  }
+}
